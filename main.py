@@ -31,6 +31,6 @@ print('Linear Regression R squared: %.4f' % linearRegression.score(X_test_split,
 root_mean_square_error = sqrt(mean_squared_error(y_test_split, y_prediction))
 print('Root Mean Square Error: %.2f'%root_mean_square_error )
 pyplot.figure(figsize=(20, 8))
-pyplot.scatter(X_test_split, y_test_split,  color='blue')
+pyplot.scatter(X_test_split, y_test_split,  color='black')
 pyplot.plot(X_test_split, y_prediction, linewidth=2, color='red')
 pyplot.show()
