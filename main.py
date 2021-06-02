@@ -1,35 +1,36 @@
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
+import pandas as panda
+import matplotlib.pyplot as pyplot
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 from math import sqrt
 
-#ładowanie danych z pliku csv
-data = pd.read_csv('dlugoscZycia.csv')
-data.head()
+#ładowanie danych z pliku csv . Plikc csv został pobrany na podstawie danych z strony http://hdr.undp.org/
+dataFromCsv = panda.read_csv('dlugoscZycia.csv')
+dataFromCsv.head()
 
-x_axis = data['Year'].values.reshape(-1, 1)
-y_axis = data['LifeSpan'].values
+#tworzenie osi na wykresie
+X_axis = dataFromCsv['Year'].values.reshape(-1, 1)
+Y_axis = dataFromCsv['LifeSpan'].values
 
-print(y_axis)
-print(x_axis)
+print(Y_axis)
+print(X_axis)
 
-X_train, X_test, y_train, y_test = train_test_split(x_axis, y_axis, test_size=0.75, random_state=0)
-regression = LinearRegression()
-regression.fit(X_train, y_train)
-y_pred = regression.predict(X_test)
+X_train_split, X_test_split, y_train_split, y_test_split = train_test_split(X_axis, Y_axis, test_size=0.75, random_state=0)
+linearRegression = LinearRegression()
+linearRegression.fit(X_train_split, y_train_split)
+y_prediction  = linearRegression.predict(X_test_split)
 
+# wartości dla interceptu i współczynnika
+print(linearRegression.intercept_)
+print(linearRegression.coef_)
 
-print(regression.intercept_)
-print(regression.coef_)
-
-
-print('Linear Regression R squared: %.4f' % regression.score(X_test, y_test))
-rmse = sqrt(mean_squared_error(y_test, y_pred))
-print('RMSE: %.2f'%rmse )
-plt.figure(figsize=(20, 8))
-plt.scatter(X_test, y_test,  color='blue')
-plt.plot(X_test, y_pred, linewidth=2, color='red')
-plt.show()
+# obliczanie wartośći R kwadrat i Root Mean Square Error
+print('Linear Regression R squared: %.4f' % linearRegression.score(X_test_split, y_test_split))
+root_mean_square_error = sqrt(mean_squared_error(y_test_split, y_prediction))
+print('Root Mean Square Error: %.2f'%root_mean_square_error )
+pyplot.figure(figsize=(20, 8))
+pyplot.scatter(X_test_split, y_test_split,  color='blue')
+pyplot.plot(X_test_split, y_prediction, linewidth=2, color='red')
+pyplot.show()
